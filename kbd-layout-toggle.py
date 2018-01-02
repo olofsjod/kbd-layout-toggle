@@ -9,7 +9,10 @@ def getCurrentKbdLayout():
     return output_arr[2].split(":     ")[1]
 
 def changeKbdLayout(layout):
-    s = subprocess.run(["setxkbmap", layout], stdout=subprocess.PIPE)
+    msg = "Changed layout to " + layout
+    subprocess.run(["notify-send", msg], stdout=subprocess.PIPE)
+    subprocess.run(["setxkbmap", layout], stdout=subprocess.PIPE)
+    
 
 def toggle(keyboard_layouts):
     cur_layout_str = getCurrentKbdLayout()
