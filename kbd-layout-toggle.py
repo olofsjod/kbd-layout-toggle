@@ -1,3 +1,11 @@
+"""kbd-layout-toggle.py
+written by Olof Sjödin <me@olofsjodin.se>
+
+The purpose of this program is to change between QWERTY and DVORAK painlessly
+in a tiled window manager.
+
+"""
+
 import subprocess
 import argparse
 
@@ -80,21 +88,22 @@ def toggle(keyboard_layouts):
 def main():
     parser = argparse.ArgumentParser()
     
-    parser.add_argument("--print", help="print the current keyboard layout", action="store_true")
-    parser.add_argument("--layout", help="change the keyboard layout to other layout", nargs=1)
+    parser.add_argument("--print-current-layout", "-p", help="print the current keyboard layout", action="store_true")
+    parser.add_argument("--layout", "-l", help="change the keyboard layout to other layout", nargs=2, metavar=('LAYOUT_NAME', 'VARIANT'))
  
-    parser.add_argument("--toggle", help="change the keyboard layout between se and se-svorak-custom", action="store_true")
+    parser.add_argument("--toggle", "-t", help="change the keyboard layout between se and se-svorak-custom", action="store_true")
     
     args = parser.parse_args()
 
-    if args.print:
+    if args.print_current_layout:
         printCurrentKbdLayout()
     elif args.toggle:
         toggleDvorak()
-    elif len(args.layout) > 0:
+    elif args.layout != None:
         new_layout = args.layout[0]
         new_variant = args.layout[1]
         l = {"layout" : new_layout, "variant" : new_variant}
         changeKbdLayout(l)
 
-main()
+if __name__ == "__main__":
+    main()
